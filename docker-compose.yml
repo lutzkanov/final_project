@@ -1,0 +1,65 @@
+version: '3.8'
+services:
+  terraform:
+    build:
+      context: . 
+    container_name: terraform-container
+    networks:
+      - terraform-network
+    volumes:
+      - ./main.tf:/app/main.tf
+      - ./quizz-app:/app/quizz-app
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_DEFAULT_REGION}
+    entrypoint: /bin/sh -c "echo 'Running Terraform...' && terraform init && terraform apply -auto-approve"
+    working_dir: /app
+
+networks:
+  terraform-network:  
+
+volumes:
+  terraform-data:
+    driver: local
+
+
+
+
+
+# version: '3.8'
+# services:
+#   vault:
+#     image: vault:1.13.0
+#     container_name: vault
+#     environment:
+#       VAULT_ADDR: "http://vault:8200"
+#     ports:
+#       - "8200:8200"
+#     volumes:
+#       - vault-data:/vault/data  
+#       - ./config.hcl:/etc/vault/config.hcl 
+#     entrypoint: "/bin/sh -c 'vault server -config=/etc/vault/config.hcl'" 
+#     networks:
+#       - vault-network
+
+#   terraform:
+#     build:
+#       context: .
+#     container_name: terraform-container
+#     depends_on:
+#       - vault 
+#     networks:
+#       - vault-network
+#     volumes:
+#       - ./main.tf:/app/main.tf
+#       - ./quizz-app:/app/quizz-app
+#     entrypoint: /bin/sh -c "echo 'Running Terraform...' && terraform init && terraform apply -auto-approve"
+
+# networks:
+#   vault-network: 
+#     driver: bridge
+
+# volumes:
+#   vault-data:
+#     driver: local
