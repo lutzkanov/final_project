@@ -2,13 +2,11 @@ name: Terraform Setup
 
 on:
   workflow_call:
-    inputs:
+    secrets:
       aws_access_key_id:
         required: true
-        type: string
       aws_secret_access_key:
         required: true
-        type: string
 
 jobs:
   setup:
@@ -20,8 +18,8 @@ jobs:
 
       - name: Configure AWS CLI
         run: |
-          aws configure set aws_access_key_id ${{ inputs.aws_access_key_id }}
-          aws configure set aws_secret_access_key ${{ inputs.aws_secret_access_key }}
+          aws configure set aws_access_key_id ${{ secrets.aws_access_key_id }}
+          aws configure set aws_secret_access_key ${{ secrets.aws_secret_access_key }}
           aws configure set region ap-south-1    
 
       - name: Set up Terraform
