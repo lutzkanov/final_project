@@ -108,6 +108,13 @@ variable "region" {
   default     = "ap-south-1"
 }
 
+variable "source_directory" {
+  description = "The directory containing the website files"
+  type        = string
+  default     = "quizz-app"
+}
+
+
 
 
 
