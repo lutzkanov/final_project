@@ -22,6 +22,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.4.6
+
       - name: Initialize Terraform
         run: terraform init
 
@@ -33,6 +38,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.4.6
 
       - name: Run Terraform Plan
         run: terraform plan \
@@ -48,6 +58,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.4.6
+
       - name: Destroy existing resources
         run: terraform destroy -auto-approve \
           -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" \
@@ -61,6 +76,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.4.6
 
       - name: Run Terraform Apply
         run: terraform apply -auto-approve \
