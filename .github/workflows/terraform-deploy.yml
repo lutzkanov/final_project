@@ -6,24 +6,21 @@ on:
       - main
 
 jobs:
-  # Call reusable workflow for setup
+  # Job to set up AWS and Terraform
   terraform-setup:
     uses: ./.github/workflows/terraform-setup.yml
-    with:
+    secrets:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   # Job to initialize Terraform
   terraform-init:
     needs: terraform-setup
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Check Terraform Version (debug step)
-        run: terraform --version
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Initialize Terraform
         run: terraform init
@@ -32,31 +29,40 @@ jobs:
   terraform-plan:
     needs: terraform-init
     runs-on: ubuntu-latest
-    
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Run Terraform Plan
-        run: terraform plan -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        run: terraform plan \
+          -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+          -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
   # Job to destroy existing resources (if any)
   terraform-destroy:
     needs: terraform-plan
     runs-on: ubuntu-latest
-    
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Destroy existing resources
-        run: |
-          terraform destroy -auto-approve \
-            -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" \
-            -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        run: terraform destroy -auto-approve \
+          -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+          -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
   # Job to apply Terraform changes
   terraform-apply:
     needs: terraform-destroy
     runs-on: ubuntu-latest
-    
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Run Terraform Apply
-        run: |
-          terraform apply -auto-approve \
-            -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" \
-            -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        run: terraform apply -auto-approve \
+          -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+          -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
