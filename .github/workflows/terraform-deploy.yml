@@ -44,6 +44,9 @@ jobs:
         with:
           terraform_version: 1.4.6
 
+      - name: Initialize Terraform
+        run: terraform init
+
       - name: Run Terraform Plan
         run: terraform plan -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
@@ -60,6 +63,9 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.4.6
+
+      - name: Initialize Terraform
+        run: terraform init
 
       - name: Destroy existing resources
         run: terraform destroy -auto-approve \
@@ -79,6 +85,9 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.4.6
+
+      - name: Initialize Terraform
+        run: terraform init
 
       - name: Run Terraform Apply
         run: terraform apply -auto-approve \
