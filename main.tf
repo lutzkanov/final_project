@@ -89,15 +89,15 @@ resource "aws_s3_bucket_policy" "website_bucket_policy" {
   })
 }
 
-# Variables
-variable "access_key" {
-  description = "AWS access key"
+
+variable "aws_access_key_id" {
+  description = "The AWS access key ID"
   type        = string
   sensitive   = true
 }
 
-variable "secret_key" {
-  description = "AWS secret key"
+variable "aws_secret_access_key" {
+  description = "The AWS secret access key"
   type        = string
   sensitive   = true
 }
@@ -108,7 +108,11 @@ variable "region" {
   default     = "ap-south-1"
 }
 
-variable "source_directory" {
-  description = "The directory where the website files are located"
-  default     = "quizz-app" 
+# AWS Provider
+provider "aws" {
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
+  region     = var.region
 }
+
+
