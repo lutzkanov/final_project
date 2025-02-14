@@ -38,7 +38,7 @@ For convenience, the website can be accessed trough my custom domain, which I ha
 - This makes it easy to run Terraform commands in any environment, ensuring that infrastructure is provisioned consistently.
 
 ## 6. Security (Secrets management)
-- Integrated **HashiCorp Vault** to manage sensitive data and API keys in the CI/CD pipeline.
+- Used GitHub Secrets, planning to implement HashiCorp Vault.
 - Kept AWS credentials and other secrets secure and dynamic, avoiding hardcoding sensitive data.
 
 ## 7. Immutable Infrastructure (Using Terraform to deploy infrastructure)
