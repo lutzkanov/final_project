@@ -45,8 +45,9 @@ RUN echo "Terraform configuration and website files copied to container."
 WORKDIR /app
 RUN echo "Working directory set to /app."
 
-# Run Terraform commands
 RUN echo "Running Terraform..." && \
     terraform init && \
-    terraform apply -auto-approve && \
+    terraform apply -auto-approve \
+    -var "access_key=${AWS_ACCESS_KEY_ID}" \
+    -var "secret_key=${AWS_SECRET_ACCESS_KEY}" && \
     echo "Terraform apply completed."

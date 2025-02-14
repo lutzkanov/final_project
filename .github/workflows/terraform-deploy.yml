@@ -1,14 +1,6 @@
-name: Terraform Deployment
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -36,4 +28,6 @@ jobs:
             -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
             -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
             -e AWS_REGION=${{ secrets.AWS_REGION }} \
-            terraform-container terraform apply -auto-approve
+            terraform-container terraform apply -auto-approve \
+            -var "access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+            -var "secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
