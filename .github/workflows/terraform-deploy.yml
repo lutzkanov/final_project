@@ -43,4 +43,4 @@ jobs:
           docker run --rm \
             -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
             -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            "${{ secrets.DOCKER_USERNAME }}/terraform-image:latest" sh -c "terraform init && terraform apply -auto-approve"
+            "${{ secrets.DOCKER_USERNAME }}/terraform-image:latest" sh -c "terraform init && terraform apply -auto-approve -var aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }} -var aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
