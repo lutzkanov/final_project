@@ -1,5 +1,15 @@
+
 # Stage 1: Build stage
 FROM ubuntu:latest AS terraform-builder
+
+# Accept build arguments
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+
+# Set environment variables
+ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+
 
 # Install necessary tools for Terraform
 RUN apt-get update && apt-get install -y \
