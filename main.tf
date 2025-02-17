@@ -1,22 +1,38 @@
+variable "aws_access_key_id" {
+  description = "The AWS access key ID"
+  type        = string
+  sensitive   = true
+}
 
-# Vault Provider - Authentication via Vault
-#provider "vault" {
-#  address = "http://vault:8200"  # Use Vault's address
-#  token   = "root"  # Use dynamic authentication in production
-#}
-#
-# Retrieve AWS credentials from Vault's secret store
-#data "vault_kv_secret_v2" "aws_credentials" {
-#  mount = "secret"
-#  name  = "aws-access-keys"
-#}
-#
-# AWS Provider - Use credentials from Vault
-#provider "aws" {
-#  access_key = data.vault_kv_secret_v2.aws_credentials.data["AWS_ACCESS_KEY_ID"]
-#  secret_key = data.vault_kv_secret_v2.aws_credentials.data["AWS_SECRET_ACCESS_KEY"]
-#  region     = "ap-south-1"  
-#}
+variable "aws_secret_access_key" {
+  description = "The AWS secret access key"
+  type        = string
+  sensitive   = true
+}
+
+variable "region" {
+  description = "AWS region"
+  type        = string
+  default     = "ap-south-1"
+}
+
+variable "source_directory" {
+  description = "The directory containing the website files"
+  type        = string
+  default     = "quizz-app"
+}
+
+variable "access_key" {
+  description = "AWS Access Key"
+  type        = string
+  sensitive   = true
+}
+
+variable "secret_key" {
+  description = "AWS Secret Key"
+  type        = string
+  sensitive   = true
+}
 
 
 provider "aws" {
@@ -89,29 +105,8 @@ resource "aws_s3_bucket_policy" "website_bucket_policy" {
 }
 
 
-variable "aws_access_key_id" {
-  description = "The AWS access key ID"
-  type        = string
-  sensitive   = true
-}
 
-variable "aws_secret_access_key" {
-  description = "The AWS secret access key"
-  type        = string
-  sensitive   = true
-}
 
-variable "region" {
-  description = "AWS region"
-  type        = string
-  default     = "ap-south-1"
-}
-
-variable "source_directory" {
-  description = "The directory containing the website files"
-  type        = string
-  default     = "quizz-app"
-}
 
 
 
