@@ -30,7 +30,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "website_bucket" {
-  bucket = "batmans3bucket123" 
+  bucket = "batmans3bucket1234" 
   acl    = "private"  
 
   website {
@@ -86,7 +86,7 @@ resource "aws_s3_bucket_policy" "website_bucket_policy" {
         Action    = "s3:GetObject"
         Effect    = "Allow"
         Principal = "*"
-        Resource  = "arn:aws:s3:::batmans3bucket123/*"  
+        Resource  = "arn:aws:s3:::batmans3bucket1234/*"  
       },
     ]
   })
