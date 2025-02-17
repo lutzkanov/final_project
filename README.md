@@ -12,7 +12,7 @@ For convenience, the website can be accessed trough my custom domain, which I ha
 - **Docker** for containerizing the Terraform environment.
 - **GitHub** as the source control platform.
 - **CloudFlare** for DNS management and CDN services.
-- **HashiCorp Vault** for managing sensitive information.
+- **GitHub Secrets** for managing sensitive information.
 
 # Topics Covered in the Project
 
