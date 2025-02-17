@@ -46,7 +46,10 @@ jobs:
 
       - name: Run Terraform Plan in Docker
         run: |
-          docker run --rm terraform-image:latest terraform plan
+          docker run --rm \
+            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+            terraform-image:latest terraform plan
 
   terraform-apply:
     runs-on: ubuntu-latest
@@ -66,4 +69,7 @@ jobs:
 
       - name: Run Terraform Apply in Docker
         run: |
-          docker run --rm terraform-image:latest terraform apply -auto-approve
+          docker run --rm \
+            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+            terraform-image:latest terraform apply -auto-approve
